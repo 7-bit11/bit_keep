@@ -1,5 +1,6 @@
 {
   "src": [
+    "pages/StartPage",
     "pages/Index"
   ]
 }

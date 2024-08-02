@@ -1,5 +1,6 @@
 import window from '@ohos.window';
 import router from '@ohos.router';
+import PreferencesUtil from '../component/PreferencesUtil';
 
 @Entry
 @Component
@@ -9,10 +10,22 @@ struct Index {
     { builder: CustomDialogBit({ name: "app Name" }) }
   );
 
-  aboutToAppear() {
-    setTimeout(() => {
-      this.controller.open()
-    }, 1000)
+  async aboutToAppear() {
+    let data = await PreferencesUtil.getValue("isAgree", false)
+    console.log(data?.toString());
+    if (!data) {
+      setTimeout(() => {
+        this.controller.open()
+      }, 1000)
+      return
+    }
+    router.replaceUrl({ url: "pages/HomePage" },
+      router.RouterMode.Single,
+      error => {
+        if (error) {
+          console.log('跳转失败 code:' + error.code + ' msg:' + error.message)
+        }
+      })
   }
 
   build() {
@@ -67,6 +80,7 @@ struct CustomDialogBit {
         Button("同意")
           .onClick(() => {
             this.controller.close()
+            PreferencesUtil.putValue("isAgree", true)
             router.replaceUrl({ url: "pages/HomePage" },
               router.RouterMode.Single,
               error => {
@@ -78,6 +92,5 @@ struct CustomDialogBit {
       }
     }
     .padding(20)
-
   }
 }

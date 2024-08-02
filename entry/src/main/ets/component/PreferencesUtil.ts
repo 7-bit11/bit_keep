@@ -7,17 +7,7 @@ class PreferencesUtil {
   async init(context, name?: string) {
     try {
       // 加载初始化Preferences
-      let data = await preferences.getPreferences(context, name?? this.defaultName)
-      this.pref.set(name ?? this.defaultName, data)
-      console.log("PreferencesUtil.init.SUCCESS")
-    } catch (e) {
-      console.log("PreferencesUtil.init.ERROR", e)
-    }
-  }
-  async init1(context, name?: string) {
-    try {
-      // 加载初始化Preferences
-      let data = await preferences.getPreferences(context, name?? this.defaultName)
+      let data = await preferences.getPreferences(context, name ?? this.defaultName)
       this.pref.set(name ?? this.defaultName, data)
       console.log("PreferencesUtil.init.SUCCESS")
     } catch (e) {
@@ -25,7 +15,19 @@ class PreferencesUtil {
     }
   }
 
-  async getValue(key: string, defValue: preferences.ValueType, name?: string) {
+  async init1(context, name?: string) {
+    try {
+      // 加载初始化Preferences
+      let data = await preferences.getPreferences(context, name ?? this.defaultName)
+      this.pref.set(name ?? this.defaultName, data)
+      console.log("PreferencesUtil.init.SUCCESS")
+    } catch (e) {
+      console.log("PreferencesUtil.init.ERROR", e)
+    }
+  }
+
+  async getValue(key: string, defValue: preferences.ValueType,
+    name?: any) {
     if (!this.pref.has(name ?? this.defaultName)) {
       console.log("PreferencesUtil.getValue.IsNotKey", "没有找到初始化的Preferences")
       return

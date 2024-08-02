@@ -63,7 +63,7 @@ struct CustomDialogBit {
         Button("取消")
           .onClick(() => {
             this.controller.close()
-          })
+          }).backgroundColor("#D3D3D3")
         Button("同意")
           .onClick(() => {
             this.controller.close()

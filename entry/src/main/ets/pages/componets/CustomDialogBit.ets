@@ -6,6 +6,8 @@ export struct CustomDialogBit {
   controller: CustomDialogController
   confirm: Function = () => {
   };
+  cancel: Function = () => {
+  };
 
   build() {
     Column({ space: 20 }) {
@@ -31,6 +33,7 @@ export struct CustomDialogBit {
       Row({ space: 20 }) {
         Button("取消")
           .onClick(() => {
+            this.cancel()
             this.controller.close()
           }).backgroundColor("#D3D3D3")
         Button("同意")

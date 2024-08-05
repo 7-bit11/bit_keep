@@ -2,15 +2,18 @@ import window from '@ohos.window';
 import router from '@ohos.router';
 import PreferencesUtil from '../component/PreferencesUtil';
 import { CustomDialogBit } from './componets/CustomDialogBit';
+import common from '@ohos.app.ability.common';
 
 @Entry
 @Component
 struct Index {
   @State message: string = 'Hello World';
+  context = getContext(this) as common.UIAbilityContext;
   controller: CustomDialogController = new CustomDialogController(
     {
       builder: CustomDialogBit({
-        confirm: this.onConfirm
+        confirm: this.onConfirm,
+        cancel: this.onCancel
       })
     }
   );
@@ -24,6 +27,11 @@ struct Index {
           console.log('跳转失败 code:' + error.code + ' msg:' + error.message)
         }
       })
+  }
+
+  //关闭应用
+  onCancel() {
+    this.context.terminateSelf()
   }
 
   ///初始化
